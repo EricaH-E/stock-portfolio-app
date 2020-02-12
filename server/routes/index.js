@@ -9,7 +9,7 @@ const routes = (app) => {
         'message': 'Welcome to the Stock API', 
     }));
 
-    //creates a new users
+     //creates a new users
     app.post('/api/users/signup', Users.createUser); 
 
     //gets existing user

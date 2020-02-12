@@ -4,7 +4,7 @@
   "description": "application to track stocks",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node index.js",
     "server": "nodemon index.js"
   },
   "repository": {
@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/EricaH-E/stock-portfolio-app#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^5.1.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11"
   },
   "devDependencies": {
