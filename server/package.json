@@ -1,0 +1,29 @@
+{
+  "name": "stock-portfolio-app",
+  "version": "1.0.0",
+  "description": "application to track stocks",
+  "main": "index.js",
+  "scripts": {
+    "start" : "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricaH-E/stock-portfolio-app.git"
+  },
+  "author": "Erica Hendricks-Elliston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EricaH-E/stock-portfolio-app/issues"
+  },
+  "homepage": "https://github.com/EricaH-E/stock-portfolio-app#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
