@@ -8,19 +8,22 @@ class Users {
         should return error if duplicate email
      */
     static createUser(req,res){
-        console.log(req.body);
-        const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-        });
+        const {name , email, password} = req.body; 
 
-        user.save()
-        .then(u => res.status(200).json(u))
-        .catch(err => res.status(409).json({
-            error : `Conflict: User with email ${req.body.email} already exist`, 
-        }))
+        User.findOne({email})
+        .then(user => {
+            if(user) return res.status(409).json({
+                message: `Conflict: User with email ${email} already exist`
+            })
 
+            const newUser = new User({
+                name,
+                email,
+                password,
+            });
+            newUser.save()
+            .then(u => res.status(200).json(u));
+        }); 
     }
 
     /*
@@ -29,8 +32,8 @@ class Users {
     if not deny access
     */
     static signInUser(req, res){
-        console.log(req.body);
-        User.findOne({email: req.body.email, password: req.body.password})
+        const {email, password} = req.body; 
+        User.findOne({email, password})
         .then(u =>res.status(200).json(u)); 
         
     }
