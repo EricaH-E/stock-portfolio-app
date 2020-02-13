@@ -1,7 +1,14 @@
 /* Index file for api routes*/
 
 const Users = require('../controllers/user.js'); 
+const Stocks = require('../controllers/stocks');
+const Transactions = require('../controllers/transactions');
+const passport = require('passport');
 
+
+require( '../services/passport')(passport);
+
+const authentication = passport.authenticate('jwt' , {session :false});
 
 const routes = (app) => {
     //default api enpoint 
@@ -14,6 +21,17 @@ const routes = (app) => {
 
     //gets existing user
     app.get('/api/users/signin', Users.signInUser); 
+
+    //user stock routes
+    app.post('/api/:user/stock',authentication, Stocks.addStock); 
+    app.get('/api/:user/portfolio', Stocks.getPortfolio);
+    app.patch('/api/stocks/:id', Stocks.updateStock);
+
+    //transaction routes
+    app.post('/api/:user/transaction',Transactions.addTransaction);
+    app.get('/api/:user/transactions', Transactions.getTransaction);
+
+
 }
 
 module.exports = routes; 
