@@ -46,24 +46,29 @@ class Stocks{
      }
 
      static updateStock(req,res){
-         const {id} = req.params;
+         const {user, stock} = req.params;
          const {shares} =  req.body;
 
-        if(!shares || !id){
+         console.log(stock);
+         console.log(shares);
+
+        if(!shares || !stock || !user){
             return res.status(400).json({
                  success: false, 
                  message: 'Bad Request: Missing required data'
              })
          }
 
-         Stock.findOneAndUpdate({id}, {shares: shares}, {useFindAndModify: false, new: true})
-         .then(update => res.status(200).json({
+         Stock.findOneAndUpdate({_id: stock, user: user}, {shares: shares}, {useFindAndModify: false, new: true})
+         .then(update => {
+             res.status(200).json({
              success: true,
+             message:'Stock updated successfully',
              data: update, 
-         }))
+         })})
          .catch( err => res.status(500).json({
              success: false,
-             error: 'Failed to update stock',
+             message: 'Failed to update stock',
          }))
 
      }
@@ -75,11 +80,12 @@ class Stocks{
         Stock.find({user})
         .then(portfolio => res.status(200).json({
             success: true,
+            message:'Stock query successful', 
             data: portfolio,
         }))
         .catch(err => res.status(500).json({
             success: false, 
-            error: 'Error getting portfolio',
+            message: 'Error getting portfolio',
         })); 
 
     }

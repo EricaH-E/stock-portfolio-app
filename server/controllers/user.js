@@ -16,13 +16,15 @@ class Users {
         User.findOne({email})
         .then(user => {
             if(user) return res.status(409).json({
-                error: `Conflict: User with email ${email} already exist`
+                success: false,
+                message: `Conflict: User with email ${email} already exist`,
             })
 
             bcrypt.hash(password, 12, (err, hash) =>{
                 if(err){
                     return res.status(500).json({
-                        message:'Error creating user'
+                        success: false, 
+                        message:'Error creating user',
                     })
                 }
 
@@ -52,7 +54,8 @@ class Users {
         .then(user => {
             if(!user){
                 return res.status(401).json({
-                    error: 'Authentication Failure: User not found' 
+                    success:false, 
+                    message: 'Authentication Failure: User not found', 
                 })
             }
             
@@ -60,7 +63,8 @@ class Users {
             bcrypt.compare(password, user.password, (err, match)=>{
                 if(err || !match ){
                     return res.status(401).json({
-                        message:'Authentication Failure: Incorrect email or password'
+                        success: false, 
+                        message:'Authentication Failure: Incorrect email or password',
                     });
                 }
                 //if a match create an authentication token for user 

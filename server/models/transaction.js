@@ -22,7 +22,8 @@ const TransactionSchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
 });
 
-module.exports = Transaction = mongoose.model('transaction', TransactionSchema);
+module.exports = Transaction = mongoose.model('Transaction', TransactionSchema);

@@ -25,7 +25,7 @@ const routes = (app) => {
     //user stock routes
     app.post('/api/:user/stock',authentication, Stocks.addStock); 
     app.get('/api/:user/portfolio', authentication,Stocks.getPortfolio);
-    app.patch('/api/stocks/:stock',authentication, Stocks.updateStock);
+    app.patch('/api/:user/stocks/:stock',authentication, Stocks.updateStock);
 
     //transaction routes
     app.post('/api/:user/transaction',authentication,Transactions.addTransaction);

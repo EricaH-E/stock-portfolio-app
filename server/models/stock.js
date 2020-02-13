@@ -19,7 +19,8 @@ const StockSchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', 
     },
 });
 
-module.exports = Stock = mongoose.model('stock', StockSchema);
+module.exports = Stock = mongoose.model('Stock', StockSchema);

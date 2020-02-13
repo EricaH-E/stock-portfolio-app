@@ -24,6 +24,14 @@ const UserSchema = new Schema({
         default: 5000.00,
 
     },
+    transactions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Transaction',
+    }], 
+    portfolio: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Stock',
+    }], 
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);

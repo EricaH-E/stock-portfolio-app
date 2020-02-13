@@ -23,13 +23,9 @@ class Transactions{
         newTrans.save()
         .then(trans => res.status(200).json({
             success: true,
+            message: 'Transaction created !',
             data: trans, 
-        }))
-        .catch(err => res.status(500).json({
-            success: true,
-            error: err, 
-            
-        }))
+        }));
     }
 
     static getTransaction(req,res){
@@ -37,11 +33,12 @@ class Transactions{
         Transaction.find({user})
         .then( trans => res.status(200).json({
             success: true,
+            message: 'Transaction query successful',
             data: trans,
         }))
         .catch(err => res.status(500).json({
             succes: false,
-            error: err,
+            message: 'Error getting transactions',
         }))
     }
 }
