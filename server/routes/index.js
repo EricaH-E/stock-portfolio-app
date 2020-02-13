@@ -24,12 +24,12 @@ const routes = (app) => {
 
     //user stock routes
     app.post('/api/:user/stock',authentication, Stocks.addStock); 
-    app.get('/api/:user/portfolio', Stocks.getPortfolio);
-    app.patch('/api/stocks/:id', Stocks.updateStock);
+    app.get('/api/:user/portfolio', authentication,Stocks.getPortfolio);
+    app.patch('/api/stocks/:stock',authentication, Stocks.updateStock);
 
     //transaction routes
-    app.post('/api/:user/transaction',Transactions.addTransaction);
-    app.get('/api/:user/transactions', Transactions.getTransaction);
+    app.post('/api/:user/transaction',authentication,Transactions.addTransaction);
+    app.get('/api/:user/transactions',authentication, Transactions.getTransaction);
 
 
 }
