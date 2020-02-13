@@ -11,7 +11,7 @@ const app = express();
 //body-parser middleware initialization
 app.use(express.json());
 
-
+//mongodb atlas uri url
 const db = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-hgehl.mongodb.net/test?retryWrites=true&w=majority`;
 
 //connect to db with mongoose
