@@ -1,6 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux'; 
+import PropTypes from 'prop-types';
 
 import Transactions from './transactions';
+import get_transactions from '../../actions/transaction'; 
+
 
 
 class TransactionContainer extends React.Component{
@@ -37,4 +41,15 @@ class TransactionContainer extends React.Component{
     }
 }
 
-export default TransactionContainer; 
+TransactionContainer.propTypes = {
+    transactions: PropTypes.array.isRequired,
+    get_transactions: PropTypes.func.isRequired,
+}
+
+  const mapStateToProps = (state) => {
+       return {
+           transactions: state.transactions,
+        }
+  }
+
+export default connect(mapStateToProps)(TransactionContainer); 

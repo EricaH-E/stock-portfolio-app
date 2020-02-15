@@ -39,7 +39,7 @@ class Stocks{
             .then(s => res.status(200).json({
                 success: true,
                 message:" Stock saved successfully",
-                data: s,
+                data: s, //dont send user id 
             }))   
             
         })

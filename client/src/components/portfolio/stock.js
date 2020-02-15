@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 
 
 
-class Transactions extends React.Component{
+class Stock extends React.Component{
     render() {
         return(
             <div> Portfolios go here</div>
         )
     }
 }
-Transactions.propTypes = {
+
+Stock.propTypes = {
     ticker: PropTypes.string,
     shares: PropTypes.number,
-    price: PropTypes.number,
+    value: PropTypes.number,
 }
-export default Transactions; 
+export default Stock; 

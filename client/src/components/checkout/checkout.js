@@ -1,5 +1,9 @@
 import React from 'react';
-import CheckoutForm from './checkoutform'; 
+import PropTypes from 'prop-types';
+
+
+import CheckoutForm from './checkoutform';
+import add_stock from '../../actions/stock';
 
 class Checkout extends React.Component{
     constructor(props){
@@ -32,5 +36,9 @@ class Checkout extends React.Component{
             />
         )
     }
+}
+
+Checkout.propTypes = {
+    add_stock: PropTypes.func.isRequired,
 }
 export default Checkout; 

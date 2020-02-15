@@ -34,7 +34,10 @@ class Users {
                     password: hash,
                 });
                 newUser.save()
-                .then(u => res.status(200).json(u));
+                .then(u => res.status(200).json({
+                    succes: true,
+                    message: 'Credentials created successfully',
+                }));
 
             }); 
 

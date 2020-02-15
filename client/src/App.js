@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/navbar/navbar';
 import Checkout from './components/checkout/checkout';
 import Landing from './components/landingpage/landingpage';
-import PortfolioContainer from './components/portfolio/portfoliocontainer'; 
+import Portfolio from './components/portfolio/portfolio'; 
 import TransactionContainer from './components/transactions/transactionscontainer';
 import SignIn from './components/authentication/signin';
 import SignUp from './components/authentication/signup';
@@ -27,7 +27,7 @@ class App extends React.Component{
               <Route exact={true} path="/checkout" component={Checkout}/>
               <Route exact={true} path="/signin" component={SignIn}/>
               <Route exact={true} path="/signup" component={SignUp}/>
-              <Route exact={true} path="/portfolio" component={PortfolioContainer}/>
+              <Route exact={true} path="/portfolio" component={Portfolio}/>
               <Route exact={true} path="/transactions" component={TransactionContainer}/>
               </Switch>
 

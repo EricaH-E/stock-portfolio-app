@@ -1,4 +1,6 @@
 import React from 'react';
+// import PropTypes from 'prop-types';
+
 import SignInForm from './signinform';
 
 
@@ -9,11 +11,13 @@ class SignIn extends React.Component{
         this.state={
             email: '',
             password:'',
+            message: '',
         }
     }
 
     handleEmailChange = (event) => {
         this.setState({email: event.target.value});
+
     }
 
     handlePasswordChange = (event)=>{
@@ -21,6 +25,7 @@ class SignIn extends React.Component{
     }
     handleSubmit = (event) => {
         /* backend call goes here */
+        console.log('submitted');
     }
 
 
@@ -36,5 +41,9 @@ class SignIn extends React.Component{
         )
     }
 }
+
+// SignUp.propTypes = {
+
+// }
 
 export default SignIn; 

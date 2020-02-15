@@ -1,6 +1,8 @@
 import React from 'react';
-import SignUpForm from './signupform';
+// import PropTypes from 'prop-types';
 
+
+import SignUpForm from './signupform';
 
 class SignUp extends React.Component{
     constructor(props){
@@ -41,5 +43,9 @@ class SignUp extends React.Component{
         )
     }
 }
+
+// SignUp.propTypes = {
+
+// }
 
 export default SignUp; 
