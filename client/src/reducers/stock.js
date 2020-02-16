@@ -9,9 +9,9 @@ export default (state=[],action) => {
         case ADD_STOCK: 
             return [...state,action.payload];
         case UPDATE_STOCK:
-            const {id, shares} = action.payload;
+            const {_id, shares} = action.payload;
             return state.map(stock =>{ 
-                if(stock.id === id){
+                if(stock._id === _id){
                     stock.shares = shares; 
                 }
                 return stock; 

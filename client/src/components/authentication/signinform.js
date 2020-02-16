@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 
 import '../../styles/forms.css';
 
@@ -20,8 +20,9 @@ class SignInForm extends React.Component{
                         <Label for="password">Password</Label>
                         <Input type="password" name="password" id="password" onChange={this.props.onPasswordChange} placeholder="password" />
                     </FormGroup>
+                    {this.props.message ? <Alert color="danger">{this.props.message}</Alert> : null}
                     <Button>Submit</Button>
-                </Form>
+                 </Form>
          </div>
         </div>
         )

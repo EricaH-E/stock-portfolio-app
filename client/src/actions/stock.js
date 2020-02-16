@@ -1,49 +1,46 @@
 /* STOCK ACTIONS */
- 
-import { ADD_STOCK, GET_STOCKS, UPDATE_STOCK } from "./index";
 import axios from "axios";
 
+import { ADD_STOCK, GET_STOCKS, UPDATE_STOCK } from "./index";
+import {authHeader as config } from './index';
 
-// define authorization header config function 
-const config = {}; 
 
-export const add_stock = ({name, ticker, shares, user}) => (dispatch) => {
-        const body = JSON.stringify({name, ticker, shares});
-        axios.post(`/api/${user}/stock`, body, config)
+export const add_stock = ({ticker, shares, user}) => (dispatch) => { 
+        const body = JSON.stringify({ticker, shares});
+        axios.post(`http://localhost:3001/api/users/${user}/stock`, body, config())
         .then(res => {
+            console.log(res); 
             dispatch({
                 type:ADD_STOCK,
-                payload: res.data, 
+                payload: res.data.data, 
             })
         })
-        .catch(err =>{
-            //if user already owns this stock then update existing 
-            dispatch(update_stock({stock:err.data, shares, user })); 
+        .catch(error =>{
+            console.log(error.response.data);
         })
 }
 
 export const get_stocks = (user) =>  (dispatch) => {
-    axios.get('/api/:user/portfolio',config)
+    axios.get(`http://localhost:3001/api/users/${user}/portfolio`,config())
     .then( res => {
         dispatch({
             type: GET_STOCKS,
-            payload: res.data,
+            payload: res.data.data,
         })
     })
 } 
 
 export const update_stock = ({stock, shares, user}) => (dispatch) => {
     const body = JSON.stringify({ shares});
-    axios.patch(`/api/${user}/stock/${stock}`, body, config)
+    axios.patch(`http://localhost:3001/api/users/${user}/stocks/${stock}`, body, config())
     .then(res => {
         dispatch({
             type: UPDATE_STOCK,
-            payload: res.data, 
+            payload: res.data.data, 
         })
     })
-    .catch(err =>{
-        //if user already owns this stock then update existing 
-        dispatch(update_stock({stock:err.data, shares })); 
+    .catch(error =>{
+        console.log(error.response.data);
     })
 } 
 

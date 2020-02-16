@@ -1,15 +1,15 @@
 
 const Stock = require('../models/stock');
-const Users = require('./user');
+const User = require('./user');
 
 
 class Stocks{
 
      static addStock(req,res){
-         const {name, ticker, shares} = req.body;
+         const {ticker, shares} = req.body;
          const {user} = req.params; 
 
-         if(!name || !ticker || !shares || !user){
+         if(!ticker || !shares || !user){
              return res.status(400).json({
                  success: false,
                  message: 'Bad Request: Missing required data',
@@ -29,7 +29,6 @@ class Stocks{
             }
             //if not in db create
               const newStock = new Stock({
-                  name,
                   ticker,
                   shares,
                   user,
@@ -39,7 +38,7 @@ class Stocks{
             .then(s => res.status(200).json({
                 success: true,
                 message:" Stock saved successfully",
-                data: s, //dont send user id 
+                data: {ticker: s.ticker, shares: s.shares}, //dont send user id 
             }))   
             
         })
@@ -48,9 +47,6 @@ class Stocks{
      static updateStock(req,res){
          const {user, stock} = req.params;
          const {shares} =  req.body;
-
-         console.log(stock);
-         console.log(shares);
 
         if(!shares || !stock || !user){
             return res.status(400).json({
@@ -75,6 +71,8 @@ class Stocks{
 
     //gets all stocks owned by current user
     static getPortfolio(req,res){
+
+        console.log("getting portfolio", req.params);
         const {user} = req.params; 
 
         Stock.find({user})

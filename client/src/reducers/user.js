@@ -1,11 +1,12 @@
 /* USER REDUCER */
-import {USER} from '../actions/index';
+import {USER, UPDATE_USER} from '../actions/index';
 
-export default function( state = {}, action){
+export default (state = {}, action) =>{
     switch(action.type){
         case USER:
-            return action.payload
-        
+            return action.payload;
+        case UPDATE_USER:
+            return action.payload;
         default: 
             return state;
     }

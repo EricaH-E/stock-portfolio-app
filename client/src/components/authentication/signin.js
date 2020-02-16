@@ -1,7 +1,12 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import SignInForm from './signinform';
+
+import {connect} from 'react-redux';
+import {signin} from '../../actions/auth';
+
+
 
 
 class SignIn extends React.Component{
@@ -11,23 +16,23 @@ class SignIn extends React.Component{
         this.state={
             email: '',
             password:'',
-            message: '',
         }
     }
 
     handleEmailChange = (event) => {
         this.setState({email: event.target.value});
-
     }
-
     handlePasswordChange = (event)=>{
         this.setState({password: event.target.value});
     }
     handleSubmit = (event) => {
-        /* backend call goes here */
-        console.log('submitted');
-    }
+        event.preventDefault();
 
+        const {email, password} = this.state;
+        const user = { email, password}; 
+
+        this.props.signin(user, this.props.history); 
+    }
 
     render(){
         return(
@@ -36,14 +41,24 @@ class SignIn extends React.Component{
                 onEmailChange={this.handleEmailChange}
                 onPasswordChange={this.handlePasswordChange}
                 onSubmit={this.handleSubmit}
+                message={this.props.error}
                 />
             </div>
         )
     }
 }
 
-// SignUp.propTypes = {
+SignIn.propTypes = {
+    signin: PropTypes.func.isRequired,
+}
 
-// }
+ const mapStateToProps = (state) => ({
+     authenticated : state.auth.authenticated, 
+     error: state.auth.error
+ })
 
-export default SignIn; 
+const mapDispatchToProps = {
+    signin
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (SignIn); 

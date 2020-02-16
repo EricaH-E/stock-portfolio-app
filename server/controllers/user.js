@@ -51,10 +51,11 @@ class Users {
     if not deny access
     */
     static signInUser(req, res){
-        const {email, password} = req.body; 
+        const {email, password} = req.body;
 
         User.findOne({email})
         .then(user => {
+            console.log(user);
             if(!user){
                 return res.status(401).json({
                     success:false, 
@@ -78,13 +79,28 @@ class Users {
 
                     res.status(200).json({
                         token: 'Bearer'+' ' + token,
-                        id: user.id,
+                        user: {id: user.id, name: user.name, balance: user.balance}
                     })
 
                 }
             })
         }); 
         
+    }
+
+    static updateUser(req,res){
+        const {user} = req.params;
+        User.findByIdAndUpdate(user,req.body, {useFindAndModify: false, new: true})
+        .then(update => {
+            res.status(200).json({
+            success: true,
+            message:'User updated successfully',
+            data: {id: update.id, name: update.name, balance: update.balance} , 
+        })})
+        .catch( err => res.status(500).json({
+            success: false,
+            message: 'Failed to update user',
+        }))
     }
 }
 

@@ -1,38 +1,38 @@
-/*TRANSACTIONS ACTIONS & THUNKS */
+/*TRANSACTIONS ACTIONS  */
 import axios from 'axios';
 
-
 import {ADD_TRANSACTION, GET_TRANSACTIONS} from './index';
+import {authHeader as config } from './index';
 
-const config = {}; 
+export const add_transaction = ({ticker, action, shares, cost, user}) => (dispatch) => {
+    const body = JSON.stringify ({ticker, action, shares, cost});
 
-export const add_transaction = ({ticker, action, shares, price, user}) => (dispatch) => {
-    const body = JSON.stringify ({ticker, action, shares, price})
-
-    axios.post(`/api/${user}/transaction`, body, config)
+    axios.post(`http://localhost:3001/api/users/${user}/transaction`, body, config())
     .then(res =>{ 
         dispatch({
             type: ADD_TRANSACTION,
-            payload: res.data,
+            payload: res.data.data,
         })
     })
-    .catch(err => {
-        console.log(err); 
+    .catch(error => {
+        console.log(error.response); 
     })
     
 }
 
-export const get_transactions = (user) =>  (dispatch) =>{
+export const get_transactions = (user) =>  (dispatch) => {
     
-    axios.get(`/api/${user}/transactions`, config)
+    axios.get(`http://localhost:3001/api/users/${user}/transactions`, config())
     .then( res => {
+        console.log(res.data.data);
+
         dispatch({
             type: GET_TRANSACTIONS,
-            payload: res.data,
+            payload: res.data.data,
         })
-        .catch(err => {
-            console.log(err); 
-        })
+     })
+    .catch(error => {
+        console.log(error.response.data); 
     })
 }
 

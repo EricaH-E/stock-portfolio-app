@@ -5,7 +5,7 @@ import { AUTHENTICATION_SUCCESS, AUTHENTICATION_ERROR, UNAUTHENTICATED_SUCCESS, 
 export default (state={}, action) => {
     switch(action.type){
         case AUTHENTICATION_SUCCESS:
-            return {...state, authenticated: true};
+            return {...state, authenticated: true, error: null };
         case AUTHENTICATION_ERROR:
             return {...state, error: action.payload};
         case UNAUTHENTICATED_SUCCESS:
@@ -13,7 +13,7 @@ export default (state={}, action) => {
         case UNAUTHENTICATED_ERROR:
             return{...state, error: action.payload};
         case SIGNUP_SUCCESS:
-            return {...state, message: action.payload};
+            return {...state, message: action.payload, error: null};
         case SIGNUP_ERROR:
             return{...state, error: action.payload};
         default:

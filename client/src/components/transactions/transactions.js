@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 
 class Transactions extends React.Component{
     render() {
+       const {id, cost, ticker, shares} = this.props; 
         return(
-            <div> Portfolios go here</div>
+            <tr key={id}> 
+               <td>{ticker}</td> 
+               <td>{shares}</td> 
+               <td>{cost}</td> 
+            </tr> 
         )
     }
 }

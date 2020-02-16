@@ -20,7 +20,7 @@ const TransactionSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
-    price:{
+    cost:{
         type: Number,
         required: true,
     },

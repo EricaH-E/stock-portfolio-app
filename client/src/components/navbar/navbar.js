@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux'; 
 import {Link }from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 
 class NavBar extends React.Component{
@@ -15,31 +17,45 @@ class NavBar extends React.Component{
     onToggle =() => {    
          this.setState({toggle: !this.state.toggle}) ;
     }
+
+    showNav(){
+        return(
+          <Navbar color="faded" light expand="sm" className="mb-5">
+          <NavbarBrand href="/" className="mr-auto">Stock Portfolio</NavbarBrand>
+            <NavbarToggler onClick={this.onToggle} className="mr-2" />
+            <Collapse isOpen={this.state.toggle} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink tag={Link} to="/portfolio">Portfolio</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/transactions">Transactions</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/signout">Sign Out</NavLink>
+               </NavItem>
+              </Nav>
+            </Collapse>
+          </Navbar>
+      )
+    }
     render() {
-      if (window.location.pathname === '/signin' || window.location.pathname === '/signup' || window.location.pathname ==='/') return null;
+      
        return (
         <div>
-        <Navbar color="faded" light expand="sm" className="mb-5">
-          <NavbarBrand href="/" className="mr-auto">Stock Portfolio</NavbarBrand>
-          <NavbarToggler onClick={this.onToggle} className="mr-2" />
-          <Collapse isOpen={this.state.toggle} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink><Link to="/portfolio">Portfolio</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to="/transactions">Transactions</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to="/signin">Sign Out</Link></NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
+            {this.props.authenticated ? this.showNav(): null}
+        </div>
         )
     }
 }
 
-export default NavBar; 
+NavBar.propTypes = {
+  authenticated: PropTypes.bool,
+}
+
+const mapStateToProps = (state) => ({
+  authenticated: state.auth.authenticated,
+})
+
+export default  connect(mapStateToProps)(NavBar); 
 

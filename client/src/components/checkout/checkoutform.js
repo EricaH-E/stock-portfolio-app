@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
 
 
 import '../../styles/forms.css';
@@ -17,11 +17,13 @@ class CheckoutForm extends React.Component{
                         <Label for="ticker">Ticker</Label>
                         <Input type="text" name="ticker" id="ticker"  onChange={this.props.onTickerChange} placeholder="ticker" />
                     </FormGroup>
+                    {this.props.cost > 0  ? <Alert> COST: {this.props.cost}</Alert> : null}
                     <FormGroup row>
-                        <Label for="password">Password</Label>
-                        <Input type="number" name="password" id="password" onChange={this.props.onQuantityChange} placeholder="quantity" />
+                        <Label for="quantity">Quantity</Label>
+                        <Input type="number" name="quantity" id="quantity" onChange={this.props.onQuantityChange} min="1" placeholder="quantity" />
                     </FormGroup>
                     <Button>Submit</Button>
+                    {this.props.message ? <Alert color="danger">{this.props.message}</Alert> : null}
                 </Form>
         </div>
         </div>

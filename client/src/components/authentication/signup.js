@@ -1,8 +1,11 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-
+import PropTypes from 'prop-types';
 
 import SignUpForm from './signupform';
+
+
+import {connect} from 'react-redux';
+import {signup} from '../../actions/auth';
 
 class SignUp extends React.Component{
     constructor(props){
@@ -17,7 +20,6 @@ class SignUp extends React.Component{
     }
     handleNameChange = (event) => {
         this.setState({name: event.target.value});
-        console.log(this.state.name);
     }
 
     handleEmailChange = (event) => {
@@ -28,8 +30,14 @@ class SignUp extends React.Component{
         this.setState({password: event.target.value});
     }
     handleSubmit = (event) => {
-        /* backend call goes here */
+        event.preventDefault(); 
+
+        const {name, email, password} = this.state;
+        const user = {name, email, password}; 
+
+        this.props.signup(user, this.props.history); 
     }
+
     render(){
         return(
             <div>
@@ -38,14 +46,21 @@ class SignUp extends React.Component{
                 onEmailChange={this.handleEmailChange}
                 onPasswordChange={this.handlePasswordChange}
                 onSubmit={this.handleSubmit}
+                message={this.props.error}
                 />
             </div>
         )
     }
 }
 
-// SignUp.propTypes = {
+SignUp.propTypes = {
+    signup: PropTypes.func.isRequired
+}
+const mapStateToProps = (state)=> ({
+        error : state.auth.error,
+})
+const mapDispatchToProps = {
+    signup
+}
 
-// }
-
-export default SignUp; 
+export default connect(mapStateToProps, mapDispatchToProps) (SignUp); 

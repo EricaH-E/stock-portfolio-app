@@ -1,6 +1,7 @@
 /*ACTION TYPES DEFINED HERE */ 
 
 export const USER = 'USER';
+export const UPDATE_USER = 'UPDATE_USER';
 
 export const AUTHENTICATION_SUCCESS = 'AUTHENTICATION_SUCCESS';
 export const AUTHENTICATION_ERROR= 'AUTHENTICATION_ERROR';
@@ -15,6 +16,22 @@ export const UPDATE_STOCK= 'UPDATE_STOCK';
 
 export const ADD_TRANSACTION = 'ADD_TRANSACTION';
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+
+
+export const authHeader = () =>{
+     const config = {
+        headers: {
+          'Content-type': 'application/json'
+        }
+      };
+    
+      // If token, add to headers
+      if(localStorage.getItem('user')) {
+        config.headers['Authorization'] = localStorage.getItem('user');
+      }
+    
+      return config;
+ };
 
 
 

@@ -3,10 +3,10 @@ const Transaction = require('../models/transaction');
 class Transactions{
     static addTransaction(req,res){
         const {user}= req.params;
-        const {ticker, action, shares, price} = req.body;
+        const {ticker, action, shares, cost} = req.body;
 
 
-        if(!user || !ticker || !action || !shares || !price){
+        if(!user || !ticker || !action || !shares || !cost){
             return res.status(400).json({
                 success: false,
                 message: 'Bad Request: Missing required data',
@@ -18,13 +18,13 @@ class Transactions{
             ticker,
             action,
             shares,
-            price,
+            cost,
         })
 
         newTrans.save()
         .then(trans => res.status(200).json({
             success: true,
-            message: 'Transaction created !',
+            message: 'Transaction saved!',
             data: trans, 
         }));
     }
