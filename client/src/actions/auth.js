@@ -76,7 +76,6 @@ export const signout = (history) => dispatch => {
         }
 
     } catch (error) {
-        console.log(error);
         dispatch({
             type: UNAUTHENTICATED_ERROR,
             payload: 'sign out failed'

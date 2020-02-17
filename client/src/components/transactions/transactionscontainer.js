@@ -29,8 +29,8 @@ class TransactionContainer extends React.Component {
         });
 
         return (
-            <div>
-                <Table borderless>
+            <div >
+                <Table hover responsive>
                     <thead>
                         <tr>
                             <th>Type</th>

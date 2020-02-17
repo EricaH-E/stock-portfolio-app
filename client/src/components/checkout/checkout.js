@@ -6,7 +6,7 @@ import CheckoutForm from './checkoutform';
 import { add_stock, update_stock } from '../../actions/stock';
 import { update_user } from '../../actions/user';
 import { add_transaction } from '../../actions/transaction';
-import { checkout, clear_cart } from '../../actions/cart';
+import { checkout, clear_cart, cart_error, get_price_quote } from '../../actions/cart';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -15,13 +15,13 @@ class Checkout extends React.Component {
         this.state = {
             ticker: '',
             shares: 0,
-            cost: 0,
         }
     }
 
     /*event handlers  */
     handleTickerChange = (event) => {
         this.setState({ ticker: event.target.value.toUpperCase() });
+        this.props.get_price_quote(this.state.ticker);
     }
 
     handleQuantityChange = (event) => {
@@ -33,7 +33,14 @@ class Checkout extends React.Component {
         event.preventDefault();
 
         const { ticker, shares } = this.state;
+        const { price } = this.props.cart;
+        const { balance } = this.props.user;
 
+
+
+        if (shares * price > balance) {
+            this.props.cart_error('Insufficient Funds');
+        }
         if (shares > 0 && ticker.length > 0) {
             this.props.checkout({ ticker, shares });
         }
@@ -62,7 +69,7 @@ class Checkout extends React.Component {
                 } else {
                     this.props.add_stock({ ...cart, shares, latestPrice });
                 }
-                this.props.update_user({ balance: user.balance - cost }, user.id);
+                this.props.update_user({ balance: (user.balance - cost).toFixed(2) }, user.id);
                 this.props.add_transaction({ ...cart, shares, cost });
                 this.props.clear_cart();
             }
@@ -77,7 +84,8 @@ class Checkout extends React.Component {
                 onTickerChange={this.handleTickerChange}
                 onQuantityChange={this.handleQuantityChange}
                 message={this.props.cart.error}
-                cost={this.state.cost}
+                cost={this.props.cart.price}
+                name={this.props.cart.name}
             />
         )
     }
@@ -92,6 +100,8 @@ Checkout.propTypes = {
     authenticated: PropTypes.bool,
     checkout: PropTypes.func.isRequired,
     clear_cart: PropTypes.func.isRequired,
+    cart_error: PropTypes.func,
+    get_price_quote: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -108,6 +118,8 @@ const mapDispatchToProps = {
     update_user,
     checkout,
     clear_cart,
+    cart_error,
+    get_price_quote
 };
 
 

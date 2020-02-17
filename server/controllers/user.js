@@ -79,7 +79,7 @@ class Users {
 
                         res.status(200).json({
                             token: 'Bearer' + ' ' + token,
-                            user: { id: user.id, name: user.name, balance: user.balance }
+                            user: { id: user.id, name: user.name, balance: user.balance, checkin: user.checkin }
                         })
 
                     }
@@ -95,7 +95,7 @@ class Users {
                 res.status(200).json({
                     success: true,
                     message: 'User updated successfully',
-                    data: { id: update.id, name: update.name, balance: update.balance },
+                    data: { id: update.id, name: update.name, balance: update.balance, checkin: update.checkin },
                 })
             })
             .catch(err => res.status(500).json({

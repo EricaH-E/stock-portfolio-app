@@ -39,4 +39,18 @@
     text-align: center;
   }
 
+  .center{
+      margin-top: 100px;
+  }
+
+  .user{
+      display: flex;
+  }
+
+  .trans{
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+  }
+
   

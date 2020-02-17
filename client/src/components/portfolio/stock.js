@@ -29,6 +29,7 @@ class Stock extends React.Component {
                 const { latestPrice } = res.data.quote;
                 const update = { latestPrice };
 
+
                 if (latestPrice !== price) {
                     this.props.update_stock({ stock: id, user: user.id }, update);
                 }
@@ -43,10 +44,23 @@ class Stock extends React.Component {
 
     componentDidMount() {
         this.interval = setInterval(this.getCurrentPrice, 5000);
+
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.price !== this.props.price) {
+
+        const { checkin } = this.props.user;
+
+
+        /* if user last check in is not equal to the current date 
+           then render gray :=> add condition below 
+           if(user.checkin === todays date )   
+        */
+        const today = new Date();
+        const date = today.toJSON().slice(0, 19).slice(0, 10);
+        const lastin = checkin.slice(0, 19).slice(0, 10);
+
+        if (prevProps.price !== this.props.price && lastin === date) {
             if (prevProps.price > this.props.price) {
                 this.setState({ color: 'red' });
             } else {
@@ -57,7 +71,7 @@ class Stock extends React.Component {
 
     render() {
         const { id, ticker, shares, price } = this.props;
-        const col = { color: this.state.color }
+        const col = { background: this.state.color }
         return (
             <tr key={id} style={col}>
                 <td>{ticker}</td>

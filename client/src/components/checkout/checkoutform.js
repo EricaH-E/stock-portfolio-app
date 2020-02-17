@@ -17,7 +17,8 @@ class CheckoutForm extends React.Component {
                             <Label for="ticker">Ticker</Label>
                             <Input type="text" name="ticker" id="ticker" onChange={this.props.onTickerChange} placeholder="ticker" />
                         </FormGroup>
-                        {this.props.cost > 0 ? <Alert> COST: {this.props.cost}</Alert> : null}
+                        {this.props.name ? <Alert> Company: {this.props.name}</Alert> : null}
+                        {this.props.cost ? <Alert> Stock Price: {this.props.cost}</Alert> : null}
                         <FormGroup row>
                             <Label for="quantity">Quantity</Label>
                             <Input type="number" name="quantity" id="quantity" onChange={this.props.onQuantityChange} min="1" placeholder="quantity" />

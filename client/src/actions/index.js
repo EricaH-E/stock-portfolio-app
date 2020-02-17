@@ -20,6 +20,10 @@ export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const CHECKOUT = 'CHECKOUT';
 export const CHECKOUT_ERROR = 'CHECKOUT_ERROR';
 export const CLEAR_CART = 'CLEAR_CART';
+export const GET_QUOTE = 'GET_QUOTE';
+
+
+
 
 
 export const authHeader = () => {

@@ -6,6 +6,7 @@ import Checkout from '../checkout/checkout';
 import { Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { get_stocks } from '../../actions/stock';
+import { update_user } from '../../actions/user';
 
 import '../../styles/portfolio.css';
 
@@ -16,26 +17,12 @@ class Portfolio extends React.Component {
         const { user } = this.props;
 
         this.props.get_stocks(user.id);
+
+        const today = new Date();
+        const update = { checkin: today };
+        this.props.update_user(update, user.id);
     }
 
-    renderUserWelcome() {
-        const { name } = this.props.user;
-        return (
-            <div>
-                <h3>{name}'s portfolio</h3>
-            </div>
-        )
-    }
-
-    renderUserBalance() {
-        const { balance } = this.props.user;
-        return (
-            <div>
-                <h5>Balance: {balance.toFixed(2)}</h5>
-            </div>
-        )
-
-    }
 
     stocksView() {
         const stocks = this.props.stocks.map(p => {
@@ -51,7 +38,7 @@ class Portfolio extends React.Component {
 
         return (
             <div>
-                <Table borderless>
+                <Table >
                     <thead>
                         <tr>
                             <th>Ticker</th>
@@ -81,12 +68,13 @@ class Portfolio extends React.Component {
 
                 <div className="main" >
                     <div className="split left">
-                        {this.renderUserWelcome()} {this.renderUserBalance()}
-                        <div >
-                            {this.props.stocks.length === 0 ? this.noStocksView() : this.stocksView()}
+                        <div className="center">
+                            <div >
+                                {this.props.stocks.length === 0 ? this.noStocksView() : this.stocksView()}
+                            </div>
                         </div>
                     </div>
-                    <div className="split right">
+                    <div className="split right" >
                         <div className="centered">
                             <Checkout />
                         </div>
@@ -101,6 +89,7 @@ Portfolio.propTypes = {
     get_stocks: PropTypes.func.isRequired,
     stocks: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
+    update_user: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -109,7 +98,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    get_stocks
+    get_stocks,
+    update_user
 }
 
 
