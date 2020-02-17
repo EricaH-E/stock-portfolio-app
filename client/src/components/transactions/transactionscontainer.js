@@ -6,7 +6,6 @@ import { Table } from 'reactstrap'
 import { connect } from 'react-redux';
 import { get_transactions } from '../../actions/transaction';
 
-import '../../styles/transactions.css';
 
 class TransactionContainer extends React.Component {
 
