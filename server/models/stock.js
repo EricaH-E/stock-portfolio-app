@@ -1,25 +1,25 @@
 /* Stocks Model */
 
 const mongoose = require('mongoose');
-const  Schema = mongoose.Schema; 
+const Schema = mongoose.Schema;
 
 const StockSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
     ticker: {
         type: String,
         required: true,
-       
+
     },
     shares: {
         type: Number,
-        required: true, 
+        required: true,
+    },
+    latestPrice: {
+        type: Number,
+        required: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
+        ref: 'User',
     },
 });
 

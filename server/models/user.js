@@ -1,7 +1,7 @@
 /*User Model */
 
 const mongoose = require('mongoose');
-const  Schema = mongoose.Schema; 
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     name: {
@@ -10,8 +10,8 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true, 
-        unique: true, 
+        required: true,
+        unique: true,
 
     },
     password: {
@@ -20,18 +20,22 @@ const UserSchema = new Schema({
     },
     balance: {
         type: Number,
-        required: true, 
+        required: true,
         default: 5000.00,
 
+    },
+    checkin: {
+        type: Date,
+        default: Date.now(),
     },
     transactions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Transaction',
-    }], 
+    }],
     portfolio: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Stock',
-    }], 
+    }],
 });
 
 module.exports = User = mongoose.model('User', UserSchema);

@@ -20,16 +20,19 @@ const routes = (app) => {
     app.post('/api/users/signup', Users.createUser); 
 
     //gets existing user
-    app.get('/api/users/signin', Users.signInUser); 
+    app.post('/api/users/signin', Users.signInUser);
+
+    //updates existing user
+    app.patch('/api/users/:user',authentication, Users.updateUser);
 
     //user stock routes
-    app.post('/api/:user/stock',authentication, Stocks.addStock); 
-    app.get('/api/:user/portfolio', authentication,Stocks.getPortfolio);
-    app.patch('/api/:user/stocks/:stock',authentication, Stocks.updateStock);
+    app.post('/api/users/:user/stock',authentication, Stocks.addStock); 
+    app.get('/api/users/:user/portfolio', authentication,Stocks.getPortfolio);
+    app.patch('/api/users/:user/stocks/:stock',authentication, Stocks.updateStock);
 
     //transaction routes
-    app.post('/api/:user/transaction',authentication,Transactions.addTransaction);
-    app.get('/api/:user/transactions',authentication, Transactions.getTransaction);
+    app.post('/api/users/:user/transaction',authentication,Transactions.addTransaction);
+    app.get('/api/users/:user/transactions',authentication, Transactions.getTransaction);
 
 
 }
