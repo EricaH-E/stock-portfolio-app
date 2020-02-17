@@ -9,12 +9,24 @@
     margin-top: 50px;
 }
 
+.main{
+    width:100%;
+}
+
 .left{ 
     left: 0; 
 }
 
 .right{
     right: 0; 
+}
+
+@media all and (max-width:400px){
+   .left, .right {
+        display:flex; 
+        flex-flow: row wrap; 
+        width: 100%;
+    }
 }
 
 .centered {
@@ -26,9 +38,5 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
-
-  #table td, #table th { 
-    padding: 8px; 
-  } 
 
   

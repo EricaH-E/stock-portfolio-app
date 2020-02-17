@@ -1,76 +1,83 @@
 import React from 'react';
-import {connect }from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-
 import CheckoutForm from './checkoutform';
-import {add_stock, update_stock } from '../../actions/stock';
-import {update_user} from '../../actions/user';
-import {add_transaction} from '../../actions/transaction';
+import { add_stock, update_stock } from '../../actions/stock';
+import { update_user } from '../../actions/user';
+import { add_transaction } from '../../actions/transaction';
+import { checkout, clear_cart } from '../../actions/cart';
 
-class Checkout extends React.Component{
-    constructor(props){
+class Checkout extends React.Component {
+    constructor(props) {
         super(props);
 
-        this.state={
+        this.state = {
             ticker: '',
             shares: 0,
             cost: 0,
-            message: null ,
         }
     }
 
     /*event handlers  */
-     handleTickerChange =(event) =>{
-         this.setState({ticker: event.target.value});
-     }
+    handleTickerChange = (event) => {
+        this.setState({ ticker: event.target.value.toUpperCase() });
+    }
 
-     handleQuantityChange =(event) =>{
-        this.setState({shares: event.target.value});
+    handleQuantityChange = (event) => {
+        this.setState({ shares: event.target.value });
 
-     }
+    }
 
-     handleSubmit = (event) => {
-
+    handleSubmit = (event) => {
         event.preventDefault();
 
-        const {ticker, shares, cost} = this.state;
-        const {user} = this.props;
+        const { ticker, shares } = this.state;
 
-        if( ticker !== ''  && shares > 0){
-            if (user.balance >= cost * shares){
-                const found = 
-                this.props.stocks.find( tick => tick.ticker === ticker);
+        if (shares > 0 && ticker.length > 0) {
+            this.props.checkout({ ticker, shares });
+        }
 
-                const cart= {action: 'BUY', ticker: ticker, user: user.id};
 
-                if(found){
-                    const update = { 
-                            ...cart,
-                            shares: found.shares + Number(shares),
-                            stock: found._id,
-                        };
-                    this.props.update_stock(update);
-            }else{
+    }
 
-                this.props.add_stock({...cart, shares});
+
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.cart !== this.props.cart) {
+            const { ticker, shares, cost, latestPrice } = this.props.cart;
+            const { user } = this.props;
+
+            if (user.balance >= cost && ticker && shares && cost && latestPrice) {
+                const found =
+                    this.props.stocks.find(tick => tick.ticker === ticker);
+
+                const cart = { action: 'BUY', ticker: ticker, user: user.id };
+
+                if (found) {
+                    const update = {
+                        shares: found.shares + Number(shares),
+                    };
+                    this.props.update_stock({ stock: found._id, user: user.id }, update);
+                } else {
+                    this.props.add_stock({ ...cart, shares, latestPrice });
+                }
+                this.props.update_user({ balance: user.balance - cost }, user.id);
+                this.props.add_transaction({ ...cart, shares, cost });
+                this.props.clear_cart();
             }
-                this.props.update_user({balance: user.balance - (cost * shares)}, user.id); 
-                this.props.add_transaction({...cart,shares, cost});
-        }else{
-                this.setState({message: 'Insufficient Funds'});
         }
     }
-     }
 
-    render (){
-        return(
-            <CheckoutForm 
-            onSubmit={this.handleSubmit}
-            onTickerChange={this.handleTickerChange}
-            onQuantityChange={this.handleQuantityChange}
-            message={this.state.message}
-            cost={this.state.cost}
+
+    render() {
+        return (
+            <CheckoutForm
+                onSubmit={this.handleSubmit}
+                onTickerChange={this.handleTickerChange}
+                onQuantityChange={this.handleQuantityChange}
+                message={this.props.cart.error}
+                cost={this.state.cost}
             />
         )
     }
@@ -83,20 +90,25 @@ Checkout.propTypes = {
     user: PropTypes.object.isRequired,
     update_user: PropTypes.func.isRequired,
     authenticated: PropTypes.bool,
+    checkout: PropTypes.func.isRequired,
+    clear_cart: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state) => ({
     user: state.user,
     authenticated: state.auth.authenticated,
     stocks: state.stocks,
+    cart: state.cart,
 })
 
 const mapDispatchToProps = {
- add_stock, 
- add_transaction,
- update_stock,
- update_user,
+    add_stock,
+    add_transaction,
+    update_stock,
+    update_user,
+    checkout,
+    clear_cart,
 };
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Checkout); 
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout); 
