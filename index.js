@@ -29,15 +29,13 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreat
 
 
 
-//Routes Redirect
-// routes(app);
-
 //default endpoint
 // app.get('*', (req, res) => res.status(200).send({
 //   'message': 'default',
 // }));
 
 app.use('/api', routes);
+
 // production configuration 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
