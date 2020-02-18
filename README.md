@@ -12,3 +12,6 @@ cd into client and run  npm start
 from main folder run npm run server 
 navigate to localhost:3001
 sign up, sign in and get started
+
+
+### deployed application still in the works
