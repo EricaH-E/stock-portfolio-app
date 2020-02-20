@@ -20,8 +20,9 @@ class Checkout extends React.Component {
 
     /*event handlers  */
     handleTickerChange = (event) => {
+        this.props.get_price_quote(event.target.value.toUpperCase());
         this.setState({ ticker: event.target.value.toUpperCase() });
-        this.props.get_price_quote(this.state.ticker);
+
     }
 
     handleQuantityChange = (event) => {

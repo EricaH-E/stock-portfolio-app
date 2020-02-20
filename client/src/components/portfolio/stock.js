@@ -30,6 +30,7 @@ class Stock extends React.Component {
                 const update = { latestPrice };
 
 
+
                 if (latestPrice !== price) {
                     this.props.update_stock({ stock: id, user: user.id }, update);
                 }
